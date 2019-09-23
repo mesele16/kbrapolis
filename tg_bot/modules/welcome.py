@@ -87,7 +87,7 @@ def new_member(bot: Bot, update: Update):
         for new_mem in new_members:
             # Give the owner a special welcome
             if new_mem.id == OWNER_ID:
-                update.effective_message.reply_text("Master is in the houseeee, let's get this party started!")
+                update.effective_message.reply_text("United we stand divided we fall ")
                 continue
 
             # Don't welcome yourself
@@ -134,6 +134,7 @@ def new_member(bot: Bot, update: Update):
         if prev_welc:
             try:
                 bot.delete_message(chat.id, prev_welc)
+                bot.delete_message(chat.id, update.message.message_id)
             except BadRequest as excp:
                 pass
 
@@ -197,8 +198,8 @@ def left_member(bot: Bot, update: Update):
 def welcome(bot: Bot, update: Update, args: List[str]):
     chat = update.effective_chat  # type: Optional[Chat]
     # if no args, show current replies.
-    if len(args) == 0 or args[0].lower() == "noformat":
-        noformat = args and args[0].lower() == "noformat"
+    if len(args) == 0 or args[0] == "noformat":
+        noformat = args and args[0] == "noformat"
         pref, welcome_m, welcome_type = sql.get_welc_pref(chat.id)
         update.effective_message.reply_text(
             "This chat has it's welcome setting set to: `{}`.\n*The welcome message "
@@ -299,7 +300,7 @@ def set_welcome(bot: Bot, update: Update) -> str:
         return ""
 
     sql.set_custom_welcome(chat.id, content or text, data_type, buttons)
-    msg.reply_text("Successfully set custom welcome message!")
+    msg.reply_text("Welcome Message set🐾🐾🐾")
 
     return "<b>{}:</b>" \
            "\n#SET_WELCOME" \
@@ -377,7 +378,7 @@ def clean_welcome(bot: Bot, update: Update, args: List[str]) -> str:
 
     if args[0].lower() in ("on", "yes"):
         sql.set_clean_welcome(str(chat.id), True)
-        update.effective_message.reply_text("I'll try to delete old welcome messages!")
+        update.effective_message.reply_text("OK, So try to delete the old welcome message")
         return "<b>{}:</b>" \
                "\n#CLEAN_WELCOME" \
                "\n<b>Admin:</b> {}" \
